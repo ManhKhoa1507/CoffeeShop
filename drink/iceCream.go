@@ -25,7 +25,7 @@ func (iceCream *IceCream) SetCost() {
 
 // Set ice cream description
 func (iceCream *IceCream) SetDescription() {
-	iceCream.Description = "Ice cream"
+	iceCream.Description = "ice cream"
 }
 
 func (iceCream *IceCream) GetPrice() float32 {

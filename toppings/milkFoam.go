@@ -9,7 +9,7 @@ type MilkFoam struct {
 // Constructor new milkFoam
 func NewMilkFoam(topping Topping) *MilkFoam {
 	return &MilkFoam{
-		Description: " Milk foam",
+		Description: "milk foam",
 		Cost:        2,
 		Topping:     topping,
 	}

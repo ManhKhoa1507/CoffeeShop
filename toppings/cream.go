@@ -9,7 +9,7 @@ type Cream struct {
 // Constructor new cream
 func NewCream(topping Topping) *Cream {
 	return &Cream{
-		Description: "Cream",
+		Description: "cream",
 		Cost:        1,
 		Topping:     topping,
 	}
@@ -25,5 +25,5 @@ func (cream *Cream) GetPrice() float32 {
 
 func (cream *Cream) GetDescription() string {
 	topDescription := cream.Topping.GetDescription()
-	return topDescription + ", " + cream.Description
+	return topDescription + " " + cream.Description
 }

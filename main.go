@@ -17,8 +17,8 @@ func GetDrinkOrder() {
 
 	// create new topping
 
-	// create new cup
-	cup := drink.NewCup()
+	// create new beverage
+	beverage := drink.NewCup()
 
 	for {
 
@@ -31,15 +31,15 @@ func GetDrinkOrder() {
 
 		case 1:
 			// Fill cup with DarkRoast
-			cup = drink.NewDarkRoastWithCup(cup)
+			beverage = drink.NewDarkRoastWithCup(beverage)
 
 		case 2:
 			// Fill cup with milk
-			cup = drink.NewMilkWithCup(cup)
+			beverage = drink.NewMilkWithCup(beverage)
 
 		case 3:
 			// Fill cup with ice cream
-			cup = drink.NewIceCreamWithCup(cup)
+			beverage = drink.NewIceCreamWithCup(beverage)
 
 		default:
 			// Fill cup with nothing
@@ -47,10 +47,12 @@ func GetDrinkOrder() {
 			continue
 		}
 
-		GetToppingOrder()
+		topping := GetToppingOrder()
+		cup := drink.MixBeverageWithTopping(beverage, topping)
 
-		fmt.Println("Current Bill: ", cup.GetDescription())
-		fmt.Println("Current price: ", cup.GetPrice())
+		fmt.Println("------Mixing---")
+		fmt.Println("Current Bill: ", cup.Description)
+		fmt.Println("Current price: ", cup.Cost)
 
 		signal := GetSignal()
 		if signal == 0 {
@@ -58,11 +60,10 @@ func GetDrinkOrder() {
 		}
 
 	}
-	fmt.Println("Total price: ", cup.GetPrice())
 }
 
 // Get Topping order
-func GetToppingOrder() {
+func GetToppingOrder() toppings.Topping {
 	topping := toppings.NewTopping()
 
 	for {
@@ -83,14 +84,14 @@ func GetToppingOrder() {
 			break
 		}
 
-		fmt.Println("Current Bill: ", topping.GetDescription())
-		fmt.Println("Current price: ", topping.GetPrice())
+		fmt.Println("Current topping: ", topping.GetDescription())
 
 		signal := GetSignal()
 		if signal == 0 {
 			break
 		}
 	}
+	return topping
 }
 
 // Get drink order and build drink by calling director
