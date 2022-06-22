@@ -11,6 +11,12 @@ func NewMilk() *Milk {
 	return &Milk{}
 }
 
+func NewMilkWithCup(cup Cup) *Milk {
+	return &Milk{
+		Cup: cup,
+	}
+}
+
 // Set milk cost
 func (milk *Milk) SetCost() {
 	milk.Cost = 10
@@ -21,13 +27,14 @@ func (milk *Milk) SetDescription() {
 	milk.Description = "Milk"
 }
 
-func (milk *Milk) GetCost() float32 {
-	return milk.Cost
-}
-
 func (milk *Milk) GetPrice() float32 {
 	cupPrice := milk.Cup.GetPrice()
-	return cupPrice + milk.Cost
+	return cupPrice + 10
+}
+
+func (milk *Milk) GetDescription() string {
+	cupDescription := milk.Cup.GetDescription()
+	return cupDescription + " " + "milk"
 }
 
 // Return milk drink

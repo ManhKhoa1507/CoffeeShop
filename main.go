@@ -2,74 +2,121 @@ package main
 
 import (
 	"CoffeeBill/drink"
+	"CoffeeBill/toppings"
 	"fmt"
-	"reflect"
 )
 
 func main() {
 	// Get user choice
-	GetOrder()
+	GetDrinkOrder()
 
 }
 
 // Get User oder
-func GetOrder() {
-	// newCup := &DrinkCup{}
-	var totalPrice float32 = 0
+func GetDrinkOrder() {
+
+	// create new topping
+
+	// create new cup
+	cup := drink.NewCup()
 
 	for {
-		newCup := &drink.DrinkCup{}
-		// var totalPrice float32
 
 		PrintMenu()
 		order := GetInput()
 
+		// New topping
+
 		switch order {
 
-		// Dark Roast
 		case 1:
-			cup := &drink.DarkRoast{
-				Cup: newCup,
-			}
-			fmt.Println(cup.GetPrice())
+			// Fill cup with DarkRoast
+			cup = drink.NewDarkRoastWithCup(cup)
 
-		// Milk
 		case 2:
-			cup := &drink.Milk{
-				Cup: newCup,
-			}
-			fmt.Println(cup.GetPrice())
+			// Fill cup with milk
+			cup = drink.NewMilkWithCup(cup)
 
 		case 3:
-			cup := &drink.IceCream{
-				Cup: newCup,
-			}
-			fmt.Println(cup.GetPrice())
+			// Fill cup with ice cream
+			cup = drink.NewIceCreamWithCup(cup)
 
-		// Not found
 		default:
-			fmt.Println("Not found drink, please find something else")
+			// Fill cup with nothing
+			fmt.Print("Not found, choose somethings to drink\n")
 			continue
 		}
 
-		// Get drink order and build drink by calling director
-		drinkType := drink.GetDrink(order)
-		director := drink.NewDirector(drinkType)
-		drink := director.BuildBeverager()
-		totalPrice += drink.Cost
+		GetToppingOrder()
 
-		fmt.Println("Drink cost: ", drink.Cost)
-		fmt.Println("Current price: ", totalPrice)
+		fmt.Println("Current Bill: ", cup.GetDescription())
+		fmt.Println("Current price: ", cup.GetPrice())
 
-		var signal int
-		fmt.Println("Continue ?")
-		fmt.Scanf("%d", &signal)
+		signal := GetSignal()
+		if signal == 0 {
+			break
+		}
 
+	}
+	fmt.Println("Total price: ", cup.GetPrice())
+}
+
+// Get Topping order
+func GetToppingOrder() {
+	topping := toppings.NewTopping()
+
+	for {
+		PrintTopping()
+		order := GetInput()
+
+		switch order {
+		case 1:
+			// Fill topping with cream
+			topping = toppings.NewCream(topping)
+
+		case 2:
+			// Fill topping with milk foam
+			topping = toppings.NewMilkFoam(topping)
+		case 3:
+
+		default:
+			break
+		}
+
+		fmt.Println("Current Bill: ", topping.GetDescription())
+		fmt.Println("Current price: ", topping.GetPrice())
+
+		signal := GetSignal()
 		if signal == 0 {
 			break
 		}
 	}
-	fmt.Println("Total price: ", totalPrice)
+}
+
+// Get drink order and build drink by calling director
+// Choose drink to build
+// After build drink return object drink{description, costs}
+func BuildDrink(order int) drink.Drink {
+	drinkType := drink.GetDrink(order)
+	director := drink.NewDirector(drinkType)
+	dR := director.BuildBeverager()
+	return dR
+}
+
+// Get user input
+func GetInput() int {
+	var drinkType int
+	fmt.Print("What do u want to order? ")
+	fmt.Scanf("%d", &drinkType)
+	return drinkType
+}
+
+// Get signal to stop
+func GetSignal() int {
+	var signal int
+	fmt.Println("Continue ?")
+	fmt.Scanf("%d", &signal)
+	return signal
 }
 
 // Print today's menu
@@ -80,22 +127,10 @@ func PrintMenu() {
 	fmt.Println("3. Ice cream")
 }
 
-// Get user input
-func GetInput() int {
-	var drinkType int
-	fmt.Print("What do u want to drink? ")
-	fmt.Scanf("%d", &drinkType)
-	return drinkType
-}
-
+// Print topping menu
 func PrintTopping() {
-
-}
-
-func getType(myvar interface{}) string {
-	if t := reflect.TypeOf(myvar); t.Kind() == reflect.Ptr {
-		return t.Elem().Name()
-	} else {
-		return t.Name()
-	}
+	fmt.Println("-----Today Topping-----")
+	fmt.Println("1. Cream")
+	fmt.Println("2. Milk Foam")
+	fmt.Println("3. Cheese")
 }
