@@ -1,9 +1,13 @@
 package bill
 
-import "CoffeeBill/drink"
+import (
+	"CoffeeBill/drink"
+	"strconv"
+)
 
 type Bill interface {
 	PrintBill() string
+	PrintDrink() string
 }
 
 type Receipt struct {
@@ -11,7 +15,11 @@ type Receipt struct {
 }
 
 func (receipt *Receipt) PrintBill() string {
-	return receipt.Drink.Description + " print bill from: "
+	return ""
+}
+
+func (receipt *Receipt) PrintDrink() string {
+	return receipt.Drink.Description
 }
 
 // Create new receipt
@@ -27,8 +35,18 @@ func NewReceipt() Bill {
 }
 
 // Add cup to the receipt
-func AddCupToReceipt(beverage drink.Drink) Bill {
+// Get old receipt then add cup to current receipt
+func AddCupToReceipt(receipt Bill, beverage drink.Drink) Bill {
+
+	// Convert float32 to strings
+	currentCost := strconv.FormatFloat(float64(beverage.Cost), 'g', 5, 64)
+	currentDescription := receipt.PrintDrink() + beverage.Description + " with cost " + currentCost
+
+	currentDrink := &drink.Drink{
+		Description: currentDescription,
+	}
+
 	return &Receipt{
-		Drink: beverage,
+		Drink: *currentDrink,
 	}
 }

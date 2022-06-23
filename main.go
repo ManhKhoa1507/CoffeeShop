@@ -10,9 +10,9 @@ import (
 func main() {
 	// Get user choice
 	receipt := GetDrinkOrder()
-	GetDevices(receipt)
 
-	// Add receipt to devices
+	// Print receipt to devices
+	GetDevices(receipt)
 }
 
 // Get User oder
@@ -27,27 +27,7 @@ func GetDrinkOrder() bill.Bill {
 		order := GetInput()
 
 		// create new beverage
-		beverage := drink.NewCup()
-
-		switch order {
-
-		case 1:
-			// Fill cup with DarkRoast
-			beverage = drink.NewDarkRoastWithCup(beverage)
-
-		case 2:
-			// Fill cup with milk
-			beverage = drink.NewMilkWithCup(beverage)
-
-		case 3:
-			// Fill cup with ice cream
-			beverage = drink.NewIceCreamWithCup(beverage)
-
-		default:
-			// Fill cup with nothing
-			fmt.Print("Not found, choose somethings to drink\n")
-			continue
-		}
+		beverage := drink.BuildDrink(order)
 
 		// Get topping order
 		topping := GetToppingOrder()
@@ -59,8 +39,9 @@ func GetDrinkOrder() bill.Bill {
 		fmt.Println("Current Cup: ", orderDrink.Description)
 		fmt.Println("Current Cup price: ", orderDrink.Cost)
 
-		receipt = bill.AddCupToReceipt(orderDrink)
+		receipt = bill.AddCupToReceipt(receipt, orderDrink)
 
+		// Singal to stop ordering
 		signal := GetSignal()
 		if signal == 0 {
 			break
@@ -79,6 +60,7 @@ func GetToppingOrder() toppings.Topping {
 	topping := toppings.NewTopping()
 
 	for {
+		// Print current topping and get user order
 		PrintTopping()
 		order := GetInput()
 
@@ -90,13 +72,13 @@ func GetToppingOrder() toppings.Topping {
 		case 2:
 			// Fill topping with milk foam
 			topping = toppings.NewMilkFoam(topping)
-
 		default:
-			break
+			continue
 		}
 
 		fmt.Println("Current topping: ", topping.GetDescription())
 
+		// Get signal to stop
 		signal := GetSignal()
 		if signal == 0 {
 			break
@@ -114,12 +96,13 @@ func GetDevices(receipt bill.Bill) {
 		switch order {
 		case 1:
 			receipt = bill.NewMessWithBill(receipt)
+
 		case 2:
 			receipt = bill.NewSmsWithBill(receipt)
 		case 3:
 			receipt = bill.NewConsoleWithBill(receipt)
 		default:
-			break
+			continue
 		}
 
 		signal := GetSignal()
@@ -127,7 +110,7 @@ func GetDevices(receipt bill.Bill) {
 			break
 		}
 	}
-	fmt.Println(receipt.PrintBill())
+	fmt.Println(receipt.PrintDrink() + " print bill to " + receipt.PrintBill())
 }
 
 // Get user input
@@ -141,7 +124,7 @@ func GetInput() int {
 // Get signal to stop
 func GetSignal() int {
 	var signal int
-	fmt.Println("Continue ?")
+	fmt.Println("Continue (0 for No/ 1 for Yes) ?")
 	fmt.Scanf("%d", &signal)
 	return signal
 }
@@ -159,7 +142,6 @@ func PrintTopping() {
 	fmt.Println("-----Today Topping-----")
 	fmt.Println("1. Cream")
 	fmt.Println("2. Milk Foam")
-	fmt.Println("3. Cheese")
 }
 
 // Print devices

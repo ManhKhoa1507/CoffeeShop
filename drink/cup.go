@@ -26,9 +26,9 @@ func NewCup() Cup {
 
 // Mix beverage with topping
 // Return Drink{}
-func MixBeverageWithTopping(cup Cup, topping toppings.Topping) Drink {
-	cupDescription := cup.GetDescription() + " with topping " + topping.GetDescription()
-	cupPrice := cup.GetPrice() + topping.GetPrice()
+func MixBeverageWithTopping(drink Drink, topping toppings.Topping) Drink {
+	cupDescription := drink.Description + " with topping " + topping.GetDescription()
+	cupPrice := drink.Cost + topping.GetPrice()
 
 	return Drink{
 		Description: cupDescription,

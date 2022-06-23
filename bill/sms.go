@@ -3,9 +3,8 @@ package bill
 import "CoffeeBill/drink"
 
 type Sms struct {
-	Description string
-	Drink       drink.Drink
-	Device      Bill
+	Drink  drink.Drink
+	Device Bill
 }
 
 func NewSms() *Sms {
@@ -19,5 +18,9 @@ func NewSmsWithBill(device Bill) *Sms {
 }
 
 func (sms *Sms) PrintBill() string {
-	return sms.Device.PrintBill() + sms.Drink.GetDescription() + "SMS "
+	return sms.Device.PrintBill() + "SMS "
+}
+
+func (sms *Sms) PrintDrink() string {
+	return sms.Device.PrintDrink() + sms.Drink.GetDescription()
 }

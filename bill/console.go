@@ -3,9 +3,8 @@ package bill
 import "CoffeeBill/drink"
 
 type Console struct {
-	Description string
-	Drink       drink.Drink
-	Device      Bill
+	Drink  drink.Drink
+	Device Bill
 }
 
 func NewConsole() *Console {
@@ -19,5 +18,9 @@ func NewConsoleWithBill(device Bill) *Console {
 }
 
 func (console *Console) PrintBill() string {
-	return console.Device.PrintBill() + console.Drink.GetDescription() + "Console "
+	return console.Device.PrintBill() + "Console "
+}
+
+func (console *Console) PrintDrink() string {
+	return console.Device.PrintDrink() + console.Drink.GetDescription()
 }
