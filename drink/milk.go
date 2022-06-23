@@ -24,7 +24,7 @@ func (milk *Milk) SetCost() {
 
 // Set milk description
 func (milk *Milk) SetDescription() {
-	milk.Description = "Milk"
+	milk.Description = "milk"
 }
 
 func (milk *Milk) GetPrice() float32 {

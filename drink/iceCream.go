@@ -8,40 +8,27 @@ type IceCream struct {
 
 // Constructor new ice cream
 func NewIceCream() *IceCream {
-	return &IceCream{}
+	return &IceCream{
+		Description: "ice cream",
+		Cost:        15,
+	}
 }
 
 // Fill cup with Ice cream
 func NewIceCreamWithCup(cup Cup) *IceCream {
 	return &IceCream{
-		Cup: cup,
+		Description: "ice cream",
+		Cost:        15,
+		Cup:         cup,
 	}
-}
-
-// Set ice cream cost
-func (iceCream *IceCream) SetCost() {
-	iceCream.Cost = 15
-}
-
-// Set ice cream description
-func (iceCream *IceCream) SetDescription() {
-	iceCream.Description = "ice cream"
 }
 
 func (iceCream *IceCream) GetPrice() float32 {
 	cupPrize := iceCream.Cup.GetPrice()
-	return cupPrize + 15
+	return cupPrize + iceCream.Cost
 }
 
 func (iceCream *IceCream) GetDescription() string {
 	cupDescription := iceCream.Cup.GetDescription()
 	return cupDescription + " " + "ice cream"
-}
-
-// Get ice cream
-func (iceCream *IceCream) GetBeverager() Drink {
-	return Drink{
-		Description: iceCream.Description,
-		Cost:        iceCream.Cost,
-	}
 }

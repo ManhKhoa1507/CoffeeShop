@@ -8,40 +8,28 @@ type DarkRoast struct {
 
 // Constructor new dark roast
 func NewDarkRoast() *DarkRoast {
-	return &DarkRoast{}
-}
-
-func NewDarkRoastWithCup(cup Cup) *DarkRoast {
 	return &DarkRoast{
-		Cup: cup,
+		Description: "dark roast",
+		Cost:        20,
 	}
 }
 
-// Set dark roast cost
-func (darkRoast *DarkRoast) SetCost() {
-	darkRoast.Cost = 20
+// Fill current cup with dark roast
+func NewDarkRoastWithCup(cup Cup) *DarkRoast {
+	return &DarkRoast{
+		Description: "dark roast",
+		Cost:        20,
+		Cup:         cup,
+	}
 }
 
-// Set dark roast description
-func (darkRoast *DarkRoast) SetDescription() {
-	darkRoast.Description = "Dark roast"
-}
-
+// Get the current cup price then add wuth darkroast coast
 func (darkRoast *DarkRoast) GetPrice() float32 {
-	cupPrice := darkRoast.Cup.GetPrice()
-	return cupPrice + 20
+	return darkRoast.Cup.GetPrice() + darkRoast.Cost
 }
 
 // Get darkRoast description
 func (darkRoast *DarkRoast) GetDescription() string {
 	cupDescription := darkRoast.Cup.GetDescription()
-	return cupDescription + " " + "dark roast"
-}
-
-// Get dark roast
-func (darkRoast *DarkRoast) GetBeverager() Drink {
-	return Drink{
-		Description: darkRoast.Description,
-		Cost:        darkRoast.Cost,
-	}
+	return cupDescription + " " + darkRoast.Description
 }

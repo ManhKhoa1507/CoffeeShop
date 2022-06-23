@@ -1,6 +1,7 @@
 package main
 
 import (
+	"CoffeeBill/bill"
 	"CoffeeBill/drink"
 	"CoffeeBill/toppings"
 	"fmt"
@@ -8,24 +9,25 @@ import (
 
 func main() {
 	// Get user choice
-	GetDrinkOrder()
+	receipt := GetDrinkOrder()
+	GetDevices(receipt)
 
+	// Add receipt to devices
 }
 
 // Get User oder
-func GetDrinkOrder() {
+func GetDrinkOrder() bill.Bill {
 
-	// create new topping
-
-	// create new beverage
-	beverage := drink.NewCup()
+	// create new bill
+	receipt := bill.NewReceipt()
 
 	for {
 
 		PrintMenu()
 		order := GetInput()
 
-		// New topping
+		// create new beverage
+		beverage := drink.NewCup()
 
 		switch order {
 
@@ -47,12 +49,17 @@ func GetDrinkOrder() {
 			continue
 		}
 
+		// Get topping order
 		topping := GetToppingOrder()
-		cup := drink.MixBeverageWithTopping(beverage, topping)
+
+		// Mix beverage with topping
+		orderDrink := drink.MixBeverageWithTopping(beverage, topping)
 
 		fmt.Println("------Mixing---")
-		fmt.Println("Current Bill: ", cup.Description)
-		fmt.Println("Current price: ", cup.Cost)
+		fmt.Println("Current Cup: ", orderDrink.Description)
+		fmt.Println("Current Cup price: ", orderDrink.Cost)
+
+		receipt = bill.AddCupToReceipt(orderDrink)
 
 		signal := GetSignal()
 		if signal == 0 {
@@ -60,10 +67,15 @@ func GetDrinkOrder() {
 		}
 
 	}
+
+	// Return drink
+	return receipt
 }
 
 // Get Topping order
 func GetToppingOrder() toppings.Topping {
+
+	// Create new topping
 	topping := toppings.NewTopping()
 
 	for {
@@ -78,7 +90,6 @@ func GetToppingOrder() toppings.Topping {
 		case 2:
 			// Fill topping with milk foam
 			topping = toppings.NewMilkFoam(topping)
-		case 3:
 
 		default:
 			break
@@ -94,22 +105,37 @@ func GetToppingOrder() toppings.Topping {
 	return topping
 }
 
-// Get drink order and build drink by calling director
-// Choose drink to build
-// After build drink return object drink{description, costs}
-func BuildDrink(order int) drink.Drink {
-	drinkType := drink.GetDrink(order)
-	director := drink.NewDirector(drinkType)
-	dR := director.BuildBeverager()
-	return dR
+func GetDevices(receipt bill.Bill) {
+	for {
+		// Choose devices to print
+		PrintDevices()
+		order := GetInput()
+
+		switch order {
+		case 1:
+			receipt = bill.NewMessWithBill(receipt)
+		case 2:
+			receipt = bill.NewSmsWithBill(receipt)
+		case 3:
+			receipt = bill.NewConsoleWithBill(receipt)
+		default:
+			break
+		}
+
+		signal := GetSignal()
+		if signal == 0 {
+			break
+		}
+	}
+	fmt.Println(receipt.PrintBill())
 }
 
 // Get user input
 func GetInput() int {
-	var drinkType int
+	var order int
 	fmt.Print("What do u want to order? ")
-	fmt.Scanf("%d", &drinkType)
-	return drinkType
+	fmt.Scanf("%d", &order)
+	return order
 }
 
 // Get signal to stop
@@ -134,4 +160,12 @@ func PrintTopping() {
 	fmt.Println("1. Cream")
 	fmt.Println("2. Milk Foam")
 	fmt.Println("3. Cheese")
+}
+
+// Print devices
+func PrintDevices() {
+	fmt.Println("---------Devices--------")
+	fmt.Println("1. Messenger")
+	fmt.Println("2. SMS")
+	fmt.Println("3. Console")
 }
