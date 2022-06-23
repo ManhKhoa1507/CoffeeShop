@@ -73,6 +73,7 @@ func GetToppingOrder() toppings.Topping {
 			// Fill topping with milk foam
 			topping = toppings.NewMilkFoam(topping)
 		default:
+			fmt.Println("Not such a devices")
 			continue
 		}
 
@@ -102,6 +103,7 @@ func GetDevices(receipt bill.Bill) {
 		case 3:
 			receipt = bill.NewConsoleWithBill(receipt)
 		default:
+			fmt.Println("Not such a devices")
 			continue
 		}
 
