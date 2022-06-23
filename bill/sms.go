@@ -1,10 +1,9 @@
 package bill
 
-import "CoffeeBill/drink"
-
 type Sms struct {
-	Drink  drink.Drink
-	Device Bill
+	Description string
+	Cost        float32
+	Device      Bill
 }
 
 func NewSms() *Sms {
@@ -21,6 +20,10 @@ func (sms *Sms) PrintBill() string {
 	return sms.Device.PrintBill() + "SMS "
 }
 
-func (sms *Sms) PrintDrink() string {
-	return sms.Device.PrintDrink() + sms.Drink.GetDescription()
+func (sms *Sms) GetDrink() string {
+	return sms.Device.GetDrink() + sms.Description
+}
+
+func (sms *Sms) GetCost() float32 {
+	return sms.Device.GetCost() + sms.Cost
 }

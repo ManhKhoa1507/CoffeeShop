@@ -13,21 +13,7 @@ type Drink struct {
 }
 
 type Director struct {
-	beverager Beverager
-}
-
-func GetDrink(drinkType int) Beverager {
-	switch drinkType {
-	case 1:
-		return &DarkRoast{}
-	case 2:
-		return &Milk{}
-	case 3:
-		return &IceCream{}
-	default:
-		// Not such a beverage
-		return nil
-	}
+	Beverager Beverager
 }
 
 // Get drink order and build drink by calling director
@@ -40,14 +26,29 @@ func BuildDrink(order int) Drink {
 	return dR
 }
 
+// Get type of drink
+func GetDrink(order int) Beverager {
+	switch order {
+	case 1:
+		return &DarkRoast{}
+	case 2:
+		return &Milk{}
+	case 3:
+		return &IceCream{}
+	default:
+		// Not such a beverage
+		return nil
+	}
+}
+
 func NewDirector(b Beverager) *Director {
 	return &Director{
-		beverager: b,
+		Beverager: b,
 	}
 }
 
 func (d *Director) BuildBeverager() Drink {
-	d.beverager.SetCost()
-	d.beverager.SetDescription()
-	return d.beverager.GetBeverager()
+	d.Beverager.SetCost()
+	d.Beverager.SetDescription()
+	return d.Beverager.GetBeverager()
 }

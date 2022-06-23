@@ -24,7 +24,7 @@ func (milk *Milk) SetCost() {
 
 // Set milk description
 func (milk *Milk) SetDescription() {
-	milk.Description = "milk"
+	milk.Description = "Milk"
 }
 
 func (milk *Milk) GetPrice() float32 {
@@ -34,7 +34,7 @@ func (milk *Milk) GetPrice() float32 {
 
 func (milk *Milk) GetDescription() string {
 	cupDescription := milk.Cup.GetDescription()
-	return cupDescription + " " + "milk"
+	return cupDescription + " " + milk.Description
 }
 
 // Return milk drink

@@ -2,6 +2,7 @@ package bill
 
 type Messenger struct {
 	Description string
+	Cost        float32
 	Device      Bill
 }
 
@@ -20,6 +21,10 @@ func (mess *Messenger) PrintBill() string {
 	return mess.Device.PrintBill() + " Messenger "
 }
 
-func (mess *Messenger) PrintDrink() string {
-	return mess.Device.PrintDrink() + mess.Description
+func (mess *Messenger) GetDrink() string {
+	return mess.Device.GetDrink() + mess.Description
+}
+
+func (mess *Messenger) GetCost() float32 {
+	return mess.Device.GetCost() + mess.Cost
 }

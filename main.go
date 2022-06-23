@@ -110,7 +110,10 @@ func GetDevices(receipt bill.Bill) {
 			break
 		}
 	}
-	fmt.Println(receipt.PrintDrink() + " print bill to " + receipt.PrintBill())
+	fmt.Println("-----------Final bill----------")
+	fmt.Println(receipt.GetDrink())
+	fmt.Println("Total cost: ", receipt.GetCost())
+	fmt.Println("Print bill to " + receipt.PrintBill())
 }
 
 // Get user input

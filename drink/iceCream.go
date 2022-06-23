@@ -35,7 +35,7 @@ func (iceCream *IceCream) GetPrice() float32 {
 
 func (iceCream *IceCream) GetDescription() string {
 	cupDescription := iceCream.Cup.GetDescription()
-	return cupDescription + " " + "ice cream"
+	return cupDescription + " " + iceCream.Description
 }
 
 // Get ice cream

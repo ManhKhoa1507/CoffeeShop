@@ -1,10 +1,9 @@
 package bill
 
-import "CoffeeBill/drink"
-
 type Console struct {
-	Drink  drink.Drink
-	Device Bill
+	Description string
+	Cost        float32
+	Device      Bill
 }
 
 func NewConsole() *Console {
@@ -21,6 +20,10 @@ func (console *Console) PrintBill() string {
 	return console.Device.PrintBill() + "Console "
 }
 
-func (console *Console) PrintDrink() string {
-	return console.Device.PrintDrink() + console.Drink.GetDescription()
+func (console *Console) GetDrink() string {
+	return console.Device.GetDrink() + console.Description
+}
+
+func (console *Console) GetCost() float32 {
+	return console.Device.GetCost() + console.Cost
 }

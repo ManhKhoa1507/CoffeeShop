@@ -24,18 +24,18 @@ func (darkRoast *DarkRoast) SetCost() {
 
 // Set dark roast description
 func (darkRoast *DarkRoast) SetDescription() {
-	darkRoast.Description = "dark roast"
+	darkRoast.Description = "Dark roast"
 }
 
 func (darkRoast *DarkRoast) GetPrice() float32 {
 	cupPrice := darkRoast.Cup.GetPrice()
-	return cupPrice + 20
+	return cupPrice + darkRoast.Cost
 }
 
 // Get darkRoast description
 func (darkRoast *DarkRoast) GetDescription() string {
 	cupDescription := darkRoast.Cup.GetDescription()
-	return cupDescription + " " + "dark roast"
+	return cupDescription + " " + darkRoast.Description
 }
 
 // Get dark roast
