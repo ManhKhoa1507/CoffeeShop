@@ -9,14 +9,14 @@ import (
 
 func main() {
 	// Get user choice
-	receipt := GetDrinkOrder()
+	receipt := GetOrder()
 
 	// Print receipt to devices
 	GetDevices(receipt)
 }
 
 // Get User oder
-func GetDrinkOrder() bill.Bill {
+func GetOrder() bill.Bill {
 
 	// create new bill
 	receipt := bill.NewReceipt()
@@ -73,8 +73,8 @@ func GetToppingOrder() toppings.Topping {
 			// Fill topping with milk foam
 			topping = toppings.NewMilkFoam(topping)
 		default:
-			fmt.Println("Not such a devices")
-			continue
+			fmt.Println("End topping")
+			break
 		}
 
 		fmt.Println("Current topping: ", topping.GetDescription())
@@ -137,16 +137,16 @@ func GetSignal() int {
 // Print today's menu
 func PrintMenu() {
 	fmt.Println("-----Today menu-----")
-	fmt.Println("1. Dark Roast")
-	fmt.Println("2. Milk")
-	fmt.Println("3. Ice cream")
+	fmt.Println("1. Dark Roast\t20")
+	fmt.Println("2. Milk\t10")
+	fmt.Println("3. Ice cream\t15")
 }
 
 // Print topping menu
 func PrintTopping() {
 	fmt.Println("-----Today Topping-----")
-	fmt.Println("1. Cream")
-	fmt.Println("2. Milk Foam")
+	fmt.Println("1. Cream\t1")
+	fmt.Println("2. Milk Foam\t2")
 }
 
 // Print devices
