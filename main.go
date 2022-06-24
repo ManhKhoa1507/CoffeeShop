@@ -89,22 +89,32 @@ func GetToppingOrder() toppings.Topping {
 }
 
 func GetDevices(receipt bill.Bill) {
+	var checkDevices [4]bool
+
 	for {
 		// Choose devices to print
 		PrintDevices()
 		order := GetInput()
 
-		switch order {
-		case 1:
+		if order == 1 && !checkDevices[order] {
+			// Print bill to Mess
 			receipt = bill.NewMessWithBill(receipt)
+			checkDevices[order] = true
 
-		case 2:
+		} else if order == 2 && !checkDevices[order] {
+			// Print bill to SMS
 			receipt = bill.NewSmsWithBill(receipt)
-		case 3:
+			checkDevices[order] = true
+
+		} else if order == 3 && !checkDevices[order] {
+			// Print bill to console if devices not add
 			receipt = bill.NewConsoleWithBill(receipt)
-		default:
-			fmt.Println("Not such a devices")
-			continue
+			checkDevices[order] = true
+
+		} else {
+			// Devices not found or already add
+			fmt.Println("Not such a devices / Devices already add")
+			break
 		}
 
 		signal := GetSignal()

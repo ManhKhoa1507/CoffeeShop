@@ -12,8 +12,7 @@ func NewMess() *Messenger {
 
 func NewMessWithBill(device Bill) *Messenger {
 	return &Messenger{
-		Description: device.PrintBill(),
-		Device:      device,
+		Device: device,
 	}
 }
 
